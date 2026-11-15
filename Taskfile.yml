@@ -1,0 +1,5 @@
+version: "3"
+tasks:
+  default: cargo run --release
+  test: cargo test --release && task count-tests
+  count-tests: ./script/count-tests.sh

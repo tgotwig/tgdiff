@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "tgdiff",
+  "version": "0.1.0",
+  "identifier": "dev.tgotwig.tgdiff",
+  "build": {
+    "frontendDist": "src/ui"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "tgdiff",
+        "width": 1100,
+        "height": 700
+      }
+    ]
+  },
+  "bundle": {
+    "active": false,
+    "icon": ["img/icon.png"]
+  }
+}
