@@ -1,0 +1,22 @@
+[package]
+name = "tgdiff"
+version = "0.1.0"
+edition = "2021"
+build = "src/build.rs"
+license = "MIT"
+description = "Original file and folder comparison tool (Tauri desktop app)"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+tauri = "2"
+
+[build-dependencies]
+tauri-build = "2"
+
+[[test]]
+name = "text"
+path = "test/text.rs"
+
+[[test]]
+name = "e2e_compare"
+path = "test/e2e/compare.rs"

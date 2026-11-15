@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tgdiff</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div id="tabs">
+        <div id="tab-list"></div>
+        <button id="add-tab" type="button" title="New tab">+</button>
+      </div>
+      <div id="inputs">
+        <textarea id="left-text" placeholder="Paste left text"></textarea>
+        <textarea id="right-text" placeholder="Paste right text"></textarea>
+      </div>
+      <nav>
+        <label id="wrap-label"><input id="wrap" type="checkbox" checked /> Wrap</label>
+        <span id="status">Paste text into both boxes to compare.</span>
+      </nav>
+    </header>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th class="left">Left</th>
+            <th class="right">Right</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </main>
+    <script src="main.js"></script>
+  </body>
+</html>

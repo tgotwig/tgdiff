@@ -1,0 +1,44 @@
+#!/bin/sh
+# Prints how many unit, integration and e2e tests the crate has.
+# Each test is a `#[test]` attribute:
+#   unit        -> #[test] in src/**/*.rs, except modules named *_integration
+#   integration -> #[test] in src modules named *_integration,
+#                  and in test/*.rs files that are not e2e files
+#   e2e         -> #[test] in test/e2e/*.rs
+
+# Counts #[test] attributes in src/ files, split into unit and integration.
+# An integration module is one whose name ends in `_integration`.
+count_src() {
+  find src -name '*.rs' -exec awk '
+    /^[ \t]*mod [A-Za-z0-9_]+ *\{/ {
+      name = $2; sub(/\{.*/, "", name)
+      in_integration = (name ~ /_integration$/)
+    }
+    /#\[test\]/ {
+      if (in_integration) integration++; else unit++
+    }
+    END { printf "%d %d\n", unit + 0, integration + 0 }
+  ' {} \; | awk '{u += $1; i += $2} END {printf "%d %d\n", u + 0, i + 0}'
+}
+
+# Counts #[test] attributes in the given files. Prints 0 when there are none.
+count() {
+  # With no files, grep would read stdin and wait forever, so return 0 early.
+  if [ "$#" -eq 0 ]; then
+    echo 0
+    return
+  fi
+  grep -h "#\[test\]" "$@" | wc -l | tr -d ' '
+}
+
+set -- $(count_src)
+unit=$1
+src_integration=$2
+tests_integration=$(count $(find test -name '*.rs' ! -path 'test/e2e/*'))
+integration=$((src_integration + tests_integration))
+e2e=$(count $(find test/e2e -name '*.rs'))
+
+echo "🧪 Unit tests:        $unit"
+echo "🔗 Integration tests: $integration"
+echo "🎬 E2E tests:         $e2e"
+echo "   Total:             $((unit + integration + e2e))"
